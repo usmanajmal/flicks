@@ -12,7 +12,6 @@ import AFNetworking
 class PrototypeTableViewCell: UITableViewCell {
 
     @IBOutlet weak var movieImageView: UIImageView!
-    @IBOutlet weak var movieSummaryTextView: UITextView!
     
     override func awakeFromNib() {
         super.awakeFromNib()

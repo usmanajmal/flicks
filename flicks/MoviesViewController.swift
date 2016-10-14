@@ -15,7 +15,7 @@ class MoviesViewController: UIViewController, UITableViewDelegate, UITableViewDa
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        tableView.rowHeight = 320;
+        tableView.rowHeight = 500;
         
         
         // Tell controller where to get data from for tableView
@@ -39,19 +39,20 @@ class MoviesViewController: UIViewController, UITableViewDelegate, UITableViewDa
         
         let cell = tableView.dequeueReusableCell(withIdentifier: "prototypeCellIdentifier", for: indexPath) as! PrototypeTableViewCell
         
+        // DEBUG
         // cell.textLabel!.text = "Row \(indexPath)"
         // print("Row \(indexPath)")
         
         if let moviesDictionary = movies?[indexPath.row] as? NSDictionary {
-            /*if let summary = postDictionary.value(forKeyPath: "poster_path") as? NSString {
-                cell.testLabel?.text = summary.substring(from: 1) as String
-                
-                
+            /*if let title = moviesDictionary.value(forKeyPath: "title") as? NSString {
+                cell.movieTitleLabel?.text = title as String
             }*/
             
             if var posterPathUrl = moviesDictionary.value(forKeyPath: "poster_path") as? NSString {
                 // NSLog("URL: \(urlOfImage)")
-                posterPathUrl = "https://image.tmdb.org/t/p/w500/\(posterPathUrl)" as NSString
+                posterPathUrl = "https://image.tmdb.org/t/p/w500\(posterPathUrl)" as NSString
+                
+                NSLog("URL: \(posterPathUrl)")
                 cell.movieImageView.setImageWith(NSURL(string: posterPathUrl as String) as! URL)
             }
         }
@@ -95,7 +96,7 @@ class MoviesViewController: UIViewController, UITableViewDelegate, UITableViewDa
      */
     func setMovies(movies: NSArray) {
         self.movies = movies
-        NSLog("Posts: \(self.movies)")
+        // NSLog("Posts: \(self.movies)")
     }
 
 }
