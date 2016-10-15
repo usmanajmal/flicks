@@ -35,6 +35,10 @@ class MoviesViewController: UIViewController, UITableViewDelegate, UITableViewDa
         return 10
     }
     
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        tableView.deselectRow(at: indexPath, animated:true)
+    }
+    
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
         let cell = tableView.dequeueReusableCell(withIdentifier: "prototypeCellIdentifier", for: indexPath) as! PrototypeTableViewCell
@@ -52,7 +56,7 @@ class MoviesViewController: UIViewController, UITableViewDelegate, UITableViewDa
                 // NSLog("URL: \(urlOfImage)")
                 posterPathUrl = "https://image.tmdb.org/t/p/w500\(posterPathUrl)" as NSString
                 
-                NSLog("URL: \(posterPathUrl)")
+                // NSLog("URL: \(posterPathUrl)")
                 cell.movieImageView.setImageWith(NSURL(string: posterPathUrl as String) as! URL)
             }
         }
@@ -98,6 +102,33 @@ class MoviesViewController: UIViewController, UITableViewDelegate, UITableViewDa
         self.movies = movies
         // NSLog("Posts: \(self.movies)")
     }
+    
+    /** 
+     *  Pass data from a view controller to the details view controller that is being presented
+     */
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        let destinationViewController = segue.destination as! DetailsViewController
+        
+        let indexPath = tableView.indexPath(for: sender as! UITableViewCell)
+        let indexPost = indexPath?[1]
+        
+        if let moviesDictionary = movies?[indexPost!] as? NSDictionary {
+            /*if let title = moviesDictionary.value(forKeyPath: "title") as? NSString {
+             cell.movieTitleLabel?.text = title as String
+             }*/
+            
+            if var posterPathUrl = moviesDictionary.value(forKeyPath: "poster_path") as? NSString {
+                // NSLog("URL: \(urlOfImage)")
+                posterPathUrl = "https://image.tmdb.org/t/p/w500\(posterPathUrl)" as NSString
+                
+                // NSLog("URL: \(posterPathUrl)")
+                destinationViewController.moviePosterUrl = posterPathUrl
+            }
+        }
+        
+        // NSLog("indexPath: \(indexPath?[1])")
+    }
+
 
 }
 
