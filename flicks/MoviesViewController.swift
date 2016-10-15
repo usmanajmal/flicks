@@ -12,6 +12,8 @@ import MBProgressHUD
 class MoviesViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
     
     @IBOutlet weak var tableView: UITableView!
+    @IBOutlet weak var networkErrorView: UIView!
+    
     var movies: NSArray? = nil
 
     override func viewDidLoad() {
@@ -33,6 +35,7 @@ class MoviesViewController: UIViewController, UITableViewDelegate, UITableViewDa
         
         // add refresh control to table view
         tableView.insertSubview(refreshControl, at: 0)
+        
 
     }
 
@@ -101,23 +104,37 @@ class MoviesViewController: UIViewController, UITableViewDelegate, UITableViewDa
             // Uncomment following only to test MBProgressHUD animation show/hide operation
             // sleep(2)
             
-            if let data = dataOrNil {
-                if let responseDictionary = try! JSONSerialization.jsonObject(with: data, options:[]) as? NSDictionary {
-                    // NSLog("Response: \(responseDictionary)")
-                    self.setMovies(movies: (responseDictionary.value(forKeyPath: "results") as? NSArray)!)
+            if (error == nil) {
+            
+                self.networkErrorView.isHidden = true
+                
+                if let data = dataOrNil {
+                    if let responseDictionary = try! JSONSerialization.jsonObject(with: data, options:[]) as? NSDictionary {
+                        // NSLog("Response: \(responseDictionary)")
+                        self.setMovies(movies: (responseDictionary.value(forKeyPath: "results") as? NSArray)!)
+                    }
                 }
+            
+                // Hide the loading animation
+                MBProgressHUD.hide(for: self.view, animated: false)
+            
+                // Stop refreshing if pull-refresh was in-effect
+                refreshControl?.endRefreshing()
+            
+                // Reload Data
+                print("Reloading data...")
+                self.tableView.reloadData()
             }
-            
-            // Hide the loading animation
-            MBProgressHUD.hide(for: self.view, animated: false)
-            
-            // Stop refreshing if pull-refresh was in-effect
-            refreshControl?.endRefreshing()
-            
-            // Reload Data
-            print("Reloading data...")
-            self.tableView.reloadData()
-            
+            else {
+                print("Not connected...")
+                self.networkErrorView.isHidden = false
+                
+                // Hide the loading animation
+                MBProgressHUD.hide(for: self.view, animated: false)
+                
+                // Stop refreshing if pull-refresh was in-effect
+                refreshControl?.endRefreshing()
+            }
         });
         task.resume()
     }
