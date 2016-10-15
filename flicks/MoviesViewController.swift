@@ -24,7 +24,16 @@ class MoviesViewController: UIViewController, UITableViewDelegate, UITableViewDa
         tableView.delegate = self
         
         // Get list of Movies
-        getMovies()
+        getMovies(refreshControl: nil)
+        
+        // Initialize a UIRefreshControl
+        let refreshControl = UIRefreshControl()
+        
+        refreshControl.addTarget(self, action: #selector(MoviesViewController.getMovies(refreshControl:)), for: UIControlEvents.valueChanged)
+        
+        // add refresh control to table view
+        tableView.insertSubview(refreshControl, at: 0)
+
     }
 
     override func didReceiveMemoryWarning() {
@@ -68,7 +77,7 @@ class MoviesViewController: UIViewController, UITableViewDelegate, UITableViewDa
     /**
      *  Get Movies using The Movie DB's API
      */
-    func getMovies() {
+    func getMovies(refreshControl: UIRefreshControl?) {
         // Provided API key
         let apiKey = "a07e22bc18f5cb106bfe4cc1f83ad8ed"
         
@@ -80,13 +89,17 @@ class MoviesViewController: UIViewController, UITableViewDelegate, UITableViewDa
             delegate:nil,
             delegateQueue:OperationQueue.main
         )
+
+        // Show loading animation only if pull-refresh is not in-effect as
+        // pull-refresh has its own loading animation
+        if ((refreshControl) == nil) {
+            MBProgressHUD.showAdded(to: self.view, animated: true)
+        }
         
-        // Start loading animation
-        MBProgressHUD.showAdded(to: self.view, animated: true)
         let task : URLSessionDataTask = session.dataTask(with: request,completionHandler: { (dataOrNil, response, error) in
             
             // Uncomment following only to test MBProgressHUD animation show/hide operation
-            // sleep(4)
+            // sleep(2)
             
             if let data = dataOrNil {
                 if let responseDictionary = try! JSONSerialization.jsonObject(with: data, options:[]) as? NSDictionary {
@@ -95,12 +108,16 @@ class MoviesViewController: UIViewController, UITableViewDelegate, UITableViewDa
                 }
             }
             
-            // Close loading animation
+            // Hide the loading animation
             MBProgressHUD.hide(for: self.view, animated: false)
             
-            print("Reloading data...")
+            // Stop refreshing if pull-refresh was in-effect
+            refreshControl?.endRefreshing()
+            
             // Reload Data
+            print("Reloading data...")
             self.tableView.reloadData()
+            
         });
         task.resume()
     }
@@ -142,7 +159,5 @@ class MoviesViewController: UIViewController, UITableViewDelegate, UITableViewDa
         
         // NSLog("indexPath: \(indexPath?[1])")
     }
-
-
 }
 
