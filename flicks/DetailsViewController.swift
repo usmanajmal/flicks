@@ -12,9 +12,11 @@ class DetailsViewController: UIViewController {
     
     var moviePosterUrl: NSString! = nil
     var movieOverview: NSString! = nil
+    var movieTitle: NSString! = nil
     
     @IBOutlet weak var detailsMoviePoster: UIImageView!
-    @IBOutlet weak var detailsMovieOverview: UITextView!
+    @IBOutlet weak var movieOverviewLabel: UILabel!
+    @IBOutlet weak var movieTitleLabel: UILabel!
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -23,8 +25,15 @@ class DetailsViewController: UIViewController {
         
         detailsMoviePoster.setImageWith(NSURL(string: moviePosterUrl as String) as! URL)
         
-        detailsMovieOverview.text = movieOverview as String?
-
+        movieTitleLabel.text = movieTitle as String?
+        
+        movieOverviewLabel.text = movieOverview as String?
+        movieOverviewLabel.sizeToFit()
+        
+        // Set scroll view parameters
+        // let contentWidth = scrollView.bounds.width
+        // let contentHeight = scrollView.bounds.height
+        // scrollView.contentSize = CGSize(width: contentWidth, height: contentHeight)
     }
 
     override func didReceiveMemoryWarning() {

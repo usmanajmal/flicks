@@ -113,9 +113,13 @@ class MoviesViewController: UIViewController, UITableViewDelegate, UITableViewDa
         let indexPost = indexPath?[1]
         
         if let moviesDictionary = movies?[indexPost!] as? NSDictionary {
-            /*if let title = moviesDictionary.value(forKeyPath: "title") as? NSString {
-             cell.movieTitleLabel?.text = title as String
-             }*/
+            if let title = moviesDictionary.value(forKeyPath: "title") as? NSString {
+                destinationViewController.movieTitle = title
+            }
+            
+            if let overview = moviesDictionary.value(forKeyPath: "overview") as? NSString {
+                destinationViewController.movieOverview = overview
+            }
             
             if var posterPathUrl = moviesDictionary.value(forKeyPath: "poster_path") as? NSString {
                 // NSLog("URL: \(urlOfImage)")
