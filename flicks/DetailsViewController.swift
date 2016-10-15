@@ -17,6 +17,8 @@ class DetailsViewController: UIViewController {
     @IBOutlet weak var detailsMoviePoster: UIImageView!
     @IBOutlet weak var movieOverviewLabel: UILabel!
     @IBOutlet weak var movieTitleLabel: UILabel!
+    @IBOutlet weak var scrollView: UIScrollView!
+    @IBOutlet weak var movieInfoView: UIView!
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -33,7 +35,7 @@ class DetailsViewController: UIViewController {
         // Set scroll view parameters
         // let contentWidth = scrollView.bounds.width
         // let contentHeight = scrollView.bounds.height
-        // scrollView.contentSize = CGSize(width: contentWidth, height: contentHeight)
+        scrollView.contentSize = CGSize(width: scrollView.frame.size.width, height: movieInfoView.frame.origin.y + movieInfoView.frame.size.height)
     }
 
     override func didReceiveMemoryWarning() {

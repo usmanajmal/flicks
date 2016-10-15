@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import MBProgressHUD
 
 class MoviesViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
     
@@ -80,13 +81,22 @@ class MoviesViewController: UIViewController, UITableViewDelegate, UITableViewDa
             delegateQueue:OperationQueue.main
         )
         
+        // Start loading animation
+        MBProgressHUD.showAdded(to: self.view, animated: true)
         let task : URLSessionDataTask = session.dataTask(with: request,completionHandler: { (dataOrNil, response, error) in
+            
+            // Uncomment following only to test MBProgressHUD animation show/hide operation
+            // sleep(4)
+            
             if let data = dataOrNil {
                 if let responseDictionary = try! JSONSerialization.jsonObject(with: data, options:[]) as? NSDictionary {
                     // NSLog("Response: \(responseDictionary)")
                     self.setMovies(movies: (responseDictionary.value(forKeyPath: "results") as? NSArray)!)
                 }
             }
+            
+            // Close loading animation
+            MBProgressHUD.hide(for: self.view, animated: false)
             
             print("Reloading data...")
             // Reload Data
