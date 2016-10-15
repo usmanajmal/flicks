@@ -52,6 +52,23 @@
 			name = Frameworks;
 			sourceTree = "<group>";
 		};
+		B69527861DB23A950040F819 /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				B66F52141DB158D60069129E /* PrototypeTableViewCell.swift */,
+			);
+			name = Views;
+			sourceTree = "<group>";
+		};
+		B69527891DB23B2A0040F819 /* View Controllers */ = {
+			isa = PBXGroup;
+			children = (
+				B6BE9E591DB153DB0030B664 /* MoviesViewController.swift */,
+				B66F52161DB198110069129E /* DetailsViewController.swift */,
+			);
+			name = "View Controllers";
+			sourceTree = "<group>";
+		};
 		B6BE9E4B1DB153D40030B664 = {
 			isa = PBXGroup;
 			children = (
@@ -73,11 +90,10 @@
 		B6BE9E561DB153D60030B664 /* flicks */ = {
 			isa = PBXGroup;
 			children = (
+				B69527891DB23B2A0040F819 /* View Controllers */,
+				B69527861DB23A950040F819 /* Views */,
 				B6BE9E571DB153D80030B664 /* AppDelegate.swift */,
-				B6BE9E591DB153DB0030B664 /* MoviesViewController.swift */,
-				B66F52141DB158D60069129E /* PrototypeTableViewCell.swift */,
 				B6BE9E5B1DB153DD0030B664 /* Main.storyboard */,
-				B66F52161DB198110069129E /* DetailsViewController.swift */,
 				B6BE9E5E1DB153DF0030B664 /* Assets.xcassets */,
 				B6BE9E601DB153E00030B664 /* LaunchScreen.storyboard */,
 				B6BE9E631DB153E00030B664 /* Info.plist */,

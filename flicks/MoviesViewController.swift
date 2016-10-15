@@ -18,7 +18,7 @@ class MoviesViewController: UIViewController, UITableViewDelegate, UITableViewDa
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        tableView.rowHeight = 500;
+        tableView.rowHeight = 100;
         
         
         // Tell controller where to get data from for tableView
@@ -61,9 +61,13 @@ class MoviesViewController: UIViewController, UITableViewDelegate, UITableViewDa
         // print("Row \(indexPath)")
         
         if let moviesDictionary = movies?[indexPath.row] as? NSDictionary {
-            /*if let title = moviesDictionary.value(forKeyPath: "title") as? NSString {
+            if let title = moviesDictionary.value(forKeyPath: "title") as? NSString {
                 cell.movieTitleLabel?.text = title as String
-            }*/
+            }
+            
+            if let overview = moviesDictionary.value(forKeyPath: "overview") as? NSString {
+                cell.movieOverviewLabel?.text = overview as String
+            }
             
             if var posterPathUrl = moviesDictionary.value(forKeyPath: "poster_path") as? NSString {
                 // NSLog("URL: \(urlOfImage)")
