@@ -15,6 +15,7 @@ class MoviesViewController: UIViewController, UITableViewDelegate, UITableViewDa
     @IBOutlet weak var networkErrorView: UIView!
     
     var movies: NSArray? = nil
+    var moviesListKind: String! = "now_playing"
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -89,7 +90,7 @@ class MoviesViewController: UIViewController, UITableViewDelegate, UITableViewDa
         let apiKey = "a07e22bc18f5cb106bfe4cc1f83ad8ed"
         
         // Provided URL for the API to use
-        let url = URL(string:"https://api.themoviedb.org/3/movie/now_playing?api_key=\(apiKey)")
+        let url = URL(string:"https://api.themoviedb.org/3/movie/\(self.moviesListKind!)?api_key=\(apiKey)")
         let request = URLRequest(url: url!)
         let session = URLSession(
             configuration: URLSessionConfiguration.default,
