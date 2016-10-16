@@ -36,6 +36,9 @@ class DetailsViewController: UIViewController {
         // Load high resoution image later in time
         let imageRequestLowResolution = NSURLRequest(url: NSURL(string: moviePosterUrlLowResolution as String)! as URL)
     
+        // Customize Navigation Bar
+        self.navigationItem.title = "Details"
+        
         detailsMoviePoster.setImageWith(
             imageRequestLowResolution as URLRequest,
             placeholderImage: nil,

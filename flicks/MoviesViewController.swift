@@ -26,6 +26,13 @@ class MoviesViewController: UIViewController, UITableViewDelegate, UITableViewDa
         tableView.dataSource = self
         tableView.delegate = self
         
+        // Customize Navigation Bar
+        self.navigationItem.title = "Movie Flicks"
+        if let navigationBar = navigationController?.navigationBar {
+            navigationBar.setBackgroundImage(UIImage(named: "flicks"), for: .default)
+
+        }
+        
         // Get list of Movies
         getMovies(refreshControl: nil)
         
