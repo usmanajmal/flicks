@@ -10,11 +10,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "flicks/MoviesViewController.swift"
-            timestampString = "498300397.130023"
+            timestampString = "498339840.103764"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "90"
-            endingLineNumber = "90"
+            startingLineNumber = "111"
+            endingLineNumber = "111"
             landmarkName = "getMovies(refreshControl:)"
             landmarkType = "7">
          </BreakpointContent>
@@ -26,11 +26,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "flicks/MoviesViewController.swift"
-            timestampString = "498300397.130023"
+            timestampString = "498339840.103764"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "116"
-            endingLineNumber = "116"
+            startingLineNumber = "137"
+            endingLineNumber = "137"
             landmarkName = "getMovies(refreshControl:)"
             landmarkType = "7">
          </BreakpointContent>

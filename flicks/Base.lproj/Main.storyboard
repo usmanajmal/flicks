@@ -33,7 +33,7 @@
                                                     <nil key="textColor"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
-                                                <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" id="LEr-ft-SBr">
+                                                <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" image="image-placeholder" id="LEr-ft-SBr">
                                                     <frame key="frameInset" maxX="247" maxY="-5"/>
                                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                                 </imageView>
@@ -162,6 +162,7 @@
         </scene>
     </scenes>
     <resources>
+        <image name="image-placeholder" width="48" height="48"/>
         <image name="network-error" width="50" height="50"/>
     </resources>
     <simulatedMetricsContainer key="defaultSimulatedMetrics">
