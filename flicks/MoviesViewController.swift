@@ -121,6 +121,8 @@ class MoviesViewController: UIViewController, UITableViewDelegate, UITableViewDa
             
                 // Hide the loading animation
                 MBProgressHUD.hide(for: self.view, animated: false)
+                
+                self.tableView.alpha = 1
             
                 // Stop refreshing if pull-refresh was in-effect
                 refreshControl?.endRefreshing()
@@ -136,7 +138,7 @@ class MoviesViewController: UIViewController, UITableViewDelegate, UITableViewDa
                 // Hide the loading animation
                 MBProgressHUD.hide(for: self.view, animated: false)
                 
-                self.tableView.isHidden = true
+                self.tableView.alpha = 0.5
                 
                 // Stop refreshing if pull-refresh was in-effect
                 refreshControl?.endRefreshing()
