@@ -75,6 +75,9 @@ class MoviesViewController: UIViewController, UITableViewDelegate, UITableViewDa
                 posterPathUrl = "https://image.tmdb.org/t/p/w500\(posterPathUrl)" as NSString
                 
                 // NSLog("URL: \(posterPathUrl)")
+                
+                // Fade-in image when loading form network
+                // Don't fade-in if loading from cache
                 let imageRequest = NSURLRequest(url: NSURL(string: posterPathUrl as String)! as URL)
                 cell.movieImageView.setImageWith(
                     imageRequest as URLRequest,
@@ -195,12 +198,13 @@ class MoviesViewController: UIViewController, UITableViewDelegate, UITableViewDa
                 destinationViewController.movieOverview = overview
             }
             
-            if var posterPathUrl = moviesDictionary.value(forKeyPath: "poster_path") as? NSString {
+            if let moviePosterPath = moviesDictionary.value(forKeyPath: "poster_path") as? NSString {
                 // NSLog("URL: \(urlOfImage)")
-                posterPathUrl = "https://image.tmdb.org/t/p/w500\(posterPathUrl)" as NSString
+                //posterPathUrl = "https://image.tmdb.org/t/p/w45\(posterPath)" as NSString
                 
-                // NSLog("URL: \(posterPathUrl)")
-                destinationViewController.moviePosterUrl = posterPathUrl
+                NSLog("URL: \(moviePosterPath)")
+                destinationViewController.moviePosterPath = moviePosterPath
+                //destinationViewController.moviePosterUrl = posterPathUrl
             }
         }
         
