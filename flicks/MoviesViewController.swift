@@ -57,6 +57,16 @@ class MoviesViewController: UIViewController, UITableViewDelegate, UITableViewDa
         
         let cell = tableView.dequeueReusableCell(withIdentifier: "prototypeCellIdentifier", for: indexPath) as! PrototypeTableViewCell
         
+        // Modifying styling of each cell of table view before moving on
+        // Custom Highlight - Show no color when user touch down a cell
+        // cell.selectionStyle = .none
+        
+        //  Custom Selection - Show very light blue when user touch up from a cell
+        let backgroundView = UIView()
+        backgroundView.backgroundColor = UIColor(red: 0, green: 0, blue: 255, alpha: 0.03)
+        cell.selectedBackgroundView = backgroundView
+        
+        
         // DEBUG
         // cell.textLabel!.text = "Row \(indexPath)"
         // print("Row \(indexPath)")
