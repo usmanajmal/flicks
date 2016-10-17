@@ -27,7 +27,7 @@ class MoviesViewController: UIViewController, UITableViewDelegate, UITableViewDa
         tableView.delegate = self
         
         // Customize Navigation Bar
-        self.navigationItem.title = "Movie Flicks"
+        self.navigationItem.title = "Flicks"
         if let navigationBar = navigationController?.navigationBar {
             navigationBar.setBackgroundImage(UIImage(named: "flicks"), for: .default)
 
@@ -148,7 +148,7 @@ class MoviesViewController: UIViewController, UITableViewDelegate, UITableViewDa
         let task : URLSessionDataTask = session.dataTask(with: request,completionHandler: { (dataOrNil, response, error) in
             
             // Uncomment following only to test MBProgressHUD animation show/hide operation
-            // sleep(2)
+            sleep(3)
             
             if (error == nil) {
             
