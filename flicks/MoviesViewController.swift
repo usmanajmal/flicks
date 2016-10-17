@@ -15,6 +15,7 @@ class MoviesViewController: UIViewController, UITableViewDelegate, UITableViewDa
     @IBOutlet weak var networkErrorView: UIView!
     
     var movies: NSArray? = nil
+    var moviesCount: Int = 10
     var moviesListKind: String! = "now_playing"
 
     override func viewDidLoad() {
@@ -53,7 +54,7 @@ class MoviesViewController: UIViewController, UITableViewDelegate, UITableViewDa
     }
     
     public func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 10
+        return moviesCount
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
@@ -66,7 +67,7 @@ class MoviesViewController: UIViewController, UITableViewDelegate, UITableViewDa
         
         // Modifying styling of each cell of table view before moving on
         // Custom Highlight - Show no color when user touch down a cell
-        // cell.selectionStyle = .none
+        cell.selectionStyle = .default
         
         //  Custom Selection - Show very light blue when user touch up from a cell
         let backgroundView = UIView()
@@ -194,6 +195,7 @@ class MoviesViewController: UIViewController, UITableViewDelegate, UITableViewDa
      */
     func setMovies(movies: NSArray) {
         self.movies = movies
+        self.moviesCount = movies.count
         // NSLog("Posts: \(self.movies)")
     }
     
