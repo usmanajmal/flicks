@@ -148,7 +148,7 @@ class MoviesViewController: UIViewController, UITableViewDelegate, UITableViewDa
         let task : URLSessionDataTask = session.dataTask(with: request,completionHandler: { (dataOrNil, response, error) in
             
             // Uncomment following only to test MBProgressHUD animation show/hide operation
-            sleep(3)
+            // sleep(3)
             
             if (error == nil) {
             
