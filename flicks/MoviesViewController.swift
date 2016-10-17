@@ -248,7 +248,7 @@ class MoviesViewController: UIViewController, UITableViewDelegate, UITableViewDa
         let indexPath = tableView.indexPath(for: sender as! UITableViewCell)
         let indexPost = indexPath?[1]
         
-        let moviesDictionary = self.movies[indexPost!]
+        let moviesDictionary = self.moviesFiltered[indexPost!]
             if let title = moviesDictionary.value(forKeyPath: "title") as? NSString {
                 destinationViewController.movieTitle = title
             }
