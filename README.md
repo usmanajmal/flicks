@@ -3,7 +3,7 @@
 
 **Flicks** is a movies app using the [The Movie Database API](http://docs.themoviedb.apiary.io/#).
 
-Time spent: **11** hours spent in total
+Time spent: **13** hours spent in total
 
 ## User Stories
 
@@ -19,7 +19,7 @@ The following **optional** features are implemented:
 
 - [x] Add a tab bar for **Now Playing** and **Top Rated** movies.
 - [ ] Implement segmented control to switch between list view and grid view.
-- [ ] Add a search bar.
+- [x] Add a search bar.
 - [x] All images fade in.
 - [x] For the large poster, load the low-res image first, switch to high-res when complete.
 - [x] Customize the highlight and selection effect of the cell.
@@ -36,8 +36,8 @@ The following **additional** features are implemented:
 
 Here's a walkthrough of implemented user stories:
 
-- [Flicks - Video Walkthrough](http://imgur.com/qr6YAP3)
-- [Alternate Link to gif](http://i.imgur.com/qr6YAP3.gif)
+- [Flicks - Video Walkthrough](http://imgur.com/VDY4j6T)
+- [Alternate Link to gif](http://i.imgur.com/VDY4j6T.gif)
 
 GIF created with [LiceCap](http://www.cockos.com/licecap/).
 
@@ -53,7 +53,6 @@ Describe any challenges encountered while building the app.
       I was setting view controller in tabBarController.viewController array instead of
       setting it to [nowPlayingNavigationController, topRatedNavigationController]
 - [ ] In case of Network Error, tapping on placeholder cell breaks the app
-
 
 ## License
 

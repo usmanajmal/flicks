@@ -9,14 +9,18 @@
 import UIKit
 import MBProgressHUD
 
-class MoviesViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
+class MoviesViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, UISearchBarDelegate {
     
     @IBOutlet weak var tableView: UITableView!
     @IBOutlet weak var networkErrorView: UIView!
+    @IBOutlet weak var searchBar: UISearchBar!
     
-    var movies: NSArray? = nil
-    var moviesCount: Int = 10
-    var moviesListKind: String! = "now_playing"
+    var movies: [NSDictionary] = []                 // List of movies to search from
+    var moviesCount: Int = 10                       // Default value. Later we update it.
+    var moviesListKind: String! = "now_playing"     // Required for default tabItem of tabBar
+    
+    var moviesFiltered: [NSDictionary] = []         // List of movies which will be shown to user
+                                                    // moviesFiltered is also used by Search functionality
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -26,6 +30,8 @@ class MoviesViewController: UIViewController, UITableViewDelegate, UITableViewDa
         // Tell controller where to get data from for tableView
         tableView.dataSource = self
         tableView.delegate = self
+        searchBar.delegate = self
+        self.moviesFiltered = self.movies
         
         // Customize Navigation Bar
         self.navigationItem.title = "Flicks"
@@ -39,9 +45,7 @@ class MoviesViewController: UIViewController, UITableViewDelegate, UITableViewDa
         
         // Initialize a UIRefreshControl
         let refreshControl = UIRefreshControl()
-        
         refreshControl.addTarget(self, action: #selector(MoviesViewController.getMovies(refreshControl:)), for: UIControlEvents.valueChanged)
-        
         // add refresh control to table view
         tableView.insertSubview(refreshControl, at: 0)
         
@@ -54,7 +58,7 @@ class MoviesViewController: UIViewController, UITableViewDelegate, UITableViewDa
     }
     
     public func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return moviesCount
+        return self.moviesCount
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
@@ -77,9 +81,10 @@ class MoviesViewController: UIViewController, UITableViewDelegate, UITableViewDa
         
         // DEBUG
         // cell.textLabel!.text = "Row \(indexPath)"
-        // print("Row \(indexPath)")
+        // print("Row \(indexPath.row)")
         
-        if let moviesDictionary = movies?[indexPath.row] as? NSDictionary {
+        if self.moviesFiltered.count > 0 {
+            let moviesDictionary = self.moviesFiltered[indexPath.row]
             if let title = moviesDictionary.value(forKeyPath: "title") as? NSString {
                 cell.movieTitleLabel?.text = title as String
             }
@@ -120,7 +125,6 @@ class MoviesViewController: UIViewController, UITableViewDelegate, UITableViewDa
                 cell.movieImageView.setImageWith(NSURL(string: posterPathUrl as String) as! URL)
             }
         }
-        
         return cell
     }
 
@@ -148,8 +152,9 @@ class MoviesViewController: UIViewController, UITableViewDelegate, UITableViewDa
         
         let task : URLSessionDataTask = session.dataTask(with: request,completionHandler: { (dataOrNil, response, error) in
             
+            // DEBUG
             // Uncomment following only to test MBProgressHUD animation show/hide operation
-            // sleep(3)
+            sleep(3)
             
             if (error == nil) {
             
@@ -158,7 +163,7 @@ class MoviesViewController: UIViewController, UITableViewDelegate, UITableViewDa
                 if let data = dataOrNil {
                     if let responseDictionary = try! JSONSerialization.jsonObject(with: data, options:[]) as? NSDictionary {
                         // NSLog("Response: \(responseDictionary)")
-                        self.setMovies(movies: (responseDictionary.value(forKeyPath: "results") as? NSArray)!)
+                        self.setMovies(movies: (responseDictionary.value(forKeyPath: "results") as? [NSDictionary])!)
                     }
                 }
             
@@ -192,11 +197,46 @@ class MoviesViewController: UIViewController, UITableViewDelegate, UITableViewDa
     
     /**
      *  Set movies property with given array of movies
+     *  Update movies list, filtered movies list and movies count
      */
-    func setMovies(movies: NSArray) {
+    func setMovies(movies: [NSDictionary]) {
         self.movies = movies
+        self.moviesFiltered = movies
         self.moviesCount = movies.count
+        
+        // DEBUG
         // NSLog("Posts: \(self.movies)")
+    }
+    
+    func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
+        // When there is no text, filteredData is the same as the original data
+        if searchText.isEmpty {
+            self.moviesFiltered = self.movies
+        } else {
+            
+            // Init moviesFiltered list and moviesCount
+            self.moviesFiltered = []
+            self.moviesCount = 0
+            
+            // Find movie title which matches searched text and add it to moviesFiltered list
+            for movie in self.movies {
+                let title = movie["title"] as! String
+                
+                // DEBUG
+                // print(title)
+                if (title.range(of: searchText, options: .caseInsensitive) != nil) {
+                    print(movie)
+                    self.moviesFiltered.append(movie)
+                }
+            }
+            
+            self.moviesCount = self.moviesFiltered.count
+        }
+        
+        // DEBUG
+        // print(moviesFiltered)
+        
+        tableView.reloadData()
     }
     
     /** 
@@ -208,7 +248,7 @@ class MoviesViewController: UIViewController, UITableViewDelegate, UITableViewDa
         let indexPath = tableView.indexPath(for: sender as! UITableViewCell)
         let indexPost = indexPath?[1]
         
-        if let moviesDictionary = movies?[indexPost!] as? NSDictionary {
+        let moviesDictionary = self.movies[indexPost!]
             if let title = moviesDictionary.value(forKeyPath: "title") as? NSString {
                 destinationViewController.movieTitle = title
             }
@@ -225,7 +265,6 @@ class MoviesViewController: UIViewController, UITableViewDelegate, UITableViewDa
                 destinationViewController.moviePosterPath = moviePosterPath
                 //destinationViewController.moviePosterUrl = posterPathUrl
             }
-        }
         
         // NSLog("indexPath: \(indexPath?[1])")
     }
