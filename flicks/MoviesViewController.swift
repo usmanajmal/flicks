@@ -154,7 +154,7 @@ class MoviesViewController: UIViewController, UITableViewDelegate, UITableViewDa
             
             // DEBUG
             // Uncomment following only to test MBProgressHUD animation show/hide operation
-            sleep(3)
+            // sleep(3)
             
             if (error == nil) {
             
